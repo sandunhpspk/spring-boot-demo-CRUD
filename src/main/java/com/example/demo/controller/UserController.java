@@ -17,26 +17,26 @@ public class UserController {
 
     //save user
     //v1/web/users
-    @PostMapping(value = "/users")
+    @PostMapping(value = "/saveUser")
     public String addUser(@RequestBody UserDto userDto) {
         String status = userService.userSaveOrUpdate(userDto);
         return status;
     }
 
     //Get All Users
-    @GetMapping(value = "/AllUsers")
+    @GetMapping(value = "/getAllUsers")
     public List<UserDto> getAllUsers(){
         return userService.getAllUsers();
     }
 
     //Get user by ID
-    @GetMapping(value = "/user/{id}")
+    @GetMapping(value = "/getUser/{id}")
     public UserDto getUser(@PathVariable Long id){
         return userService.getUser(id);
     }
 
     //Delete User
-    @DeleteMapping(value = "/user/{id}")
+    @DeleteMapping(value = "/deleteUser/{id}")
     public String deleteUser(@PathVariable Long id){
         String status = userService.deleteUser(id);
         return status;
