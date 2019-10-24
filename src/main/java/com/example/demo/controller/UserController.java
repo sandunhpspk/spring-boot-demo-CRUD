@@ -4,10 +4,9 @@ import com.example.demo.common.Constant;
 import com.example.demo.dto.UserDto;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping(Constant.API_ROOT)
 @RestController
@@ -24,5 +23,10 @@ public class UserController {
         return status;
     }
 
+    //Get All Users
+    @GetMapping(value = "/AllUsers")
+    public List<UserDto> getAllUsers(){
+        return userService.getAllUsers();
+    }
 
 }

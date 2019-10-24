@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.converter.UserConverter;
 import com.example.demo.dto.UserDto;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -14,6 +17,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserConverter userConverter;
 
     //User save
     @Transactional
@@ -27,8 +33,14 @@ public class UserService {
 
         userRepository.save(user);
 
-        return "OK";
+        return "user saved";
     }
 
+    //Get all users
+    @Transactional
+    public List<UserDto> getAllUsers() {
+        return userRepository.findAll().stream().map(userConverter::entityToDto).collect(Collectors.toList());
+//        return userRepository.findAll();
+    }
 
 }
