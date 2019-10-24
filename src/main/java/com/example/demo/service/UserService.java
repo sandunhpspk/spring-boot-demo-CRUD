@@ -31,16 +31,44 @@ public class UserService {
         user.setPassword(userDto.getPassword());
         user.setEmail(userDto.getEmail());
 
-        userRepository.save(user);
+        //check existing user ID
+        UserDto userCheck = getUser(user.getId());
 
-        return "user saved";
+        if (userCheck.getId() != user.getId()) {
+            userRepository.save(user);
+            return "user saved successfully !";
+        } else {
+            return "user already exists";
+        }
     }
 
     //Get all users
     @Transactional
     public List<UserDto> getAllUsers() {
         return userRepository.findAll().stream().map(userConverter::entityToDto).collect(Collectors.toList());
-//        return userRepository.findAll();
     }
+
+    //Get user by ID
+    @Transactional
+    public UserDto getUser(Long id) {
+        User user = userRepository.findById(id).orElse(new User());
+
+        return userConverter.entityToDto(user);
+    }
+
+    //Delete user by ID
+    @Transactional
+    public String deleteUser(Long id) {
+        UserDto userDto = getUser(id);
+
+        if (userDto.getId() != 0) {
+            userRepository.deleteById(id);
+            return "User deleted successfully!";
+        } else {
+            return "User not found";
+        }
+
+    }
+
 
 }

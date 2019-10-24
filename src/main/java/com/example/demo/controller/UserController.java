@@ -29,4 +29,17 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    //Get user by ID
+    @GetMapping(value = "/user/{id}")
+    public UserDto getUser(@PathVariable Long id){
+        return userService.getUser(id);
+    }
+
+    //Delete User
+    @DeleteMapping(value = "/user/{id}")
+    public String deleteUser(@PathVariable Long id){
+        String status = userService.deleteUser(id);
+        return status;
+    }
+
 }
