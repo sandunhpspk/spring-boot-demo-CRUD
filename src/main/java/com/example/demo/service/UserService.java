@@ -37,9 +37,17 @@ public class UserService {
         if (userCheck.getId() != user.getId()) {
             userRepository.save(user);
             return "user saved successfully !";
-        } else {
-            return "user already exists";
+        } else if (userCheck.getId() == user.getId()) {
+
+            User userUpdate = userRepository.findById(user.getId()).get();
+            userUpdate.setUsername(userDto.getUsername());
+            userUpdate.setPassword(userDto.getPassword());
+            userUpdate.setEmail(userDto.getEmail());
+            userRepository.save(userUpdate);
+
+            return "user updated successfully !";
         }
+        return "";
     }
 
     //Get all users
@@ -67,7 +75,6 @@ public class UserService {
         } else {
             return "User not found";
         }
-
     }
 
 
